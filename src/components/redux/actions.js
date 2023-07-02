@@ -14,5 +14,6 @@ export const addContact = createAction(
     };
   }
 );
+
 export const delContact = createAction('contacts/deleteContact');
 export const setFilter = createAction('filter/setFilter');
