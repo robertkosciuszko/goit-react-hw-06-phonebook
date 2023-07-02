@@ -44,6 +44,7 @@ export const App = () => {
       dispatch(addContact(name, number));
     }
   };
+  
 
   const handleDelete = e => {
     dispatch(delContact(e));
