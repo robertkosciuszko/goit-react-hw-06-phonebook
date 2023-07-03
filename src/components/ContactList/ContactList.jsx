@@ -1,33 +1,33 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import css from './ContactList.module.css';
 
-export const ContactList = ({ contacts, handleDelete }) => (
-  <div className={css.wraperContactList}>
-    <ul className={css.contactList}>
+export const ContactList = ({ contacts, handleDeleteContact }) => {
+  return (
+    <ul className={`${css.contactList} ${css.wraperContactList}`}>
       {contacts.map(contact => (
         <li key={contact.id} className={css.contactListItem}>
           {contact.name}: {contact.number}
           <button
             type="button"
             className={css.contactListItemBtn}
-            onClick={() => handleDelete(contact.id)}
+            onClick={() => handleDeleteContact(contact.id)}
           >
             Delete
           </button>
         </li>
       ))}
     </ul>
-  </div>
-);
+  );
+};
 
 ContactList.propTypes = {
-  contacts: propTypes.arrayOf(
-    propTypes.exact({
-      id: propTypes.string.isRequired,
-      name: propTypes.string.isRequired,
-      number: propTypes.string.isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
     })
-  ),
-  handleDelete: propTypes.func.isRequired,
+  ).isRequired,
+  handleDeleteContact: PropTypes.func.isRequired,
 };
