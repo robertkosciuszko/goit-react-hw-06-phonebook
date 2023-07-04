@@ -44,16 +44,19 @@ const App = () => {
     dispatch(deleteContact(id));
   };
 
-  const getFilteredContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact => {
-      return (
-        contact.name &&
-        typeof contact.name === 'string' &&
-        contact.name.toLowerCase().includes(normalizedFilter)
-      );
-    });
-  };
+const getFilteredContacts = () => {
+  const normalizedFilter =
+    typeof filter === 'string' ? filter.toLowerCase() : '';
+  return contacts.filter(contact => {
+    return (
+      contact.name &&
+      typeof contact.name === 'string' &&
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  });
+};
+
+
 
   return (
     <div className="app-container">
