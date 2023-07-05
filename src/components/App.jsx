@@ -3,15 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
+import { setFilter } from './redux/filterSlice';
 import { addContact, deleteContact } from './redux/contactsSlice';
 import { getContacts, getFilter } from './redux/selectors';
 
 const App = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
-
   const dispatch = useDispatch();
-
   const [firstRenderFlag, setFirstRenderFlag] = useState(true);
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const App = () => {
     if (existingContact) {
       alert(`${name} is already in contacts.`);
     } else {
-      dispatch(addContact({ name, number }));
+      dispatch(addContact({ id: `id-${Date.now()}`, name, number }));
     }
   };
 
@@ -44,26 +43,28 @@ const App = () => {
     dispatch(deleteContact(id));
   };
 
-const getFilteredContacts = () => {
-  const normalizedFilter =
-    typeof filter === 'string' ? filter.toLowerCase() : '';
-  return contacts.filter(contact => {
-    return (
-      contact.name &&
-      typeof contact.name === 'string' &&
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  });
-};
+  const handleFilterChange = e => {
+    dispatch(setFilter(e.target.value));
+  };
 
-
+  const getFilteredContacts = () => {
+    const normalizedFilter =
+      typeof filter === 'string' ? filter.toLowerCase() : '';
+    return contacts.filter(contact => {
+      return (
+        contact.name &&
+        typeof contact.name === 'string' &&
+        contact.name.toLowerCase().includes(normalizedFilter)
+      );
+    });
+  };
 
   return (
     <div className="app-container">
       <h1>Phonebook</h1>
       <ContactForm handleAddContact={handleAddContact} />
       <h2>Contacts</h2>
-      <Filter />
+      <Filter value={filter} handleChange={handleFilterChange} />
       <ContactList
         contacts={getFilteredContacts()}
         handleDeleteContact={handleDeleteContact}

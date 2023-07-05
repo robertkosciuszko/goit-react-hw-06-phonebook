@@ -8,3 +8,12 @@ const rootReducer = combineReducers({
 });
 
 export default rootReducer;
+
+// components/selectors.js
+export const getContacts = state => {
+  return state.contacts;
+};
+
+export const getFilter = state => {
+  return state.filter;
+};

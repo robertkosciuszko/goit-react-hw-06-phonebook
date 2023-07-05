@@ -1,7 +1,7 @@
 export const getContacts = state => {
-  return state.contacts.items;
+  return state.contacts;
 };
 
 export const getFilter = state => {
-  return state.contacts.filter;
+  return state.filter;
 };
