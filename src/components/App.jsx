@@ -6,6 +6,8 @@ import { ContactList } from './ContactList/ContactList';
 import { setFilter } from './redux/filterSlice';
 import { addContact, deleteContact } from './redux/contactsSlice';
 import { getContacts, getFilter } from './redux/selectors';
+import { setContacts } from './redux/contactsSlice';
+
 
 const App = () => {
   const contacts = useSelector(getContacts);
@@ -13,13 +15,14 @@ const App = () => {
   const dispatch = useDispatch();
   const [firstRenderFlag, setFirstRenderFlag] = useState(true);
 
-  useEffect(() => {
-    const contactsFromLocalStorage = localStorage.getItem('contactList');
-    if (contactsFromLocalStorage) {
-      dispatch(addContact(JSON.parse(contactsFromLocalStorage)));
-    }
-    setFirstRenderFlag(false);
-  }, [dispatch]);
+ useEffect(() => {
+   const contactsFromLocalStorage = localStorage.getItem('contactList');
+   if (contactsFromLocalStorage) {
+     dispatch(setContacts(JSON.parse(contactsFromLocalStorage)));
+   }
+   setFirstRenderFlag(false);
+ }, [dispatch]);
+
 
   useEffect(() => {
     if (!firstRenderFlag) {
